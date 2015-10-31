@@ -10,6 +10,7 @@
 #  url         :string           not null
 #  date_posted :datetime         not null
 #  source      :string           not null
+#  source_id   :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

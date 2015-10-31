@@ -1,0 +1,2 @@
+class Aggregator::Something
+end
