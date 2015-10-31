@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029031503) do
+ActiveRecord::Schema.define(version: 20151031230342) do
 
   create_table "job_postings", force: :cascade do |t|
     t.string   "title",       null: false
@@ -34,5 +34,16 @@ ActiveRecord::Schema.define(version: 20151029031503) do
   add_index "job_postings", ["source_id"], name: "index_job_postings_on_source_id", unique: true
   add_index "job_postings", ["title"], name: "index_job_postings_on_title"
   add_index "job_postings", ["url"], name: "index_job_postings_on_url", unique: true
+
+  create_table "users", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "email"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
 
 end
