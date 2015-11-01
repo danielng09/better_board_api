@@ -1,5 +1,6 @@
 require 'rest-client'
 require 'time'
+require './api_retriever.rb'
 
 =begin
   @api_url
@@ -15,14 +16,12 @@ require 'time'
   #get_job_listing
 =end
 
-
-class Indeed
+class Aggregator::Indeed < Aggregator::ApiRetriever
   attr_accessor :publisher_id, :api_url, :results, :passed_params
 
   def initialize(passed_params)
     self.api_url = "http://api.indeed.com/ads/apisearch"
-    self.passed_params = passed_params
-    self.results = []
+    super
   end
 
   def default_params
@@ -42,50 +41,30 @@ class Indeed
     [[:q, :search], [:l, :location], [:fromage, :activity]]
   end
 
-  def merge_params
-    hash = {}
-    search_param_keys.each do |actual_key, passed_key|
-      hash[actual_key] = passed_params[passed_key] if passed_params[passed_key]
-    end
-    default_params.merge(hash)
-  end
+#merge_passed_params
 
   def search
-    search_params = merge_passed_params
+    params = merge_passed_params
     total_results = false
     raw_data = {'end' => 0, 'totalResults' => 1}
     until raw_data['end'] >= raw_data['totalResults']
-      raw_data = get_job_listing(search_params)
+      raw_data = get_job_listings(params)
       extract_relevant_data(raw_data['results'])
       search_params[:start] = raw_data['end'] + 1
     end
     self.results
   end
 
-  def sort_results!
-    self.results = self.results.sort_by do |h|
-      Time.strptime(h[:date], "%m/%d/%Y")
-    end.reverse
+#sort_results!
+
+  def data_format
+    [[:jobtitle, 'jobtitle'], [:company, 'company'], [:location, 'formattedLocation'], [:description, 'snippet'], [:url, 'url'], [:date, 'date'], [:id, 'jobkey'], [:source, self.class.name]]
   end
 
-  def extract_relevant_data(raw_data)
-    raw_data.each do |post|
-        binding.pry
-      self.results.push({
-        jobtitle: post['jobtitle'],
-        company: post['company'],
-        location: post['formattedLocation'],
-        description: post['snippet'],
-        url: post['url'],
-        date: Time.parse(post['date']).strftime("%m/%d/%Y"),
-        id: post['jobkey'],
-        source: self.class.name
-      })
-    end
-  end
+#extract_relevant_data
 
-  def get_job_listing(search_params)
-    output = RestClient.get(self.api_url, {params: search_params})
+  def get_job_listings(params)
+    output = RestClient.get(self.api_url, {params: params})
     JSON.parse(output)
   end
 end
