@@ -11,6 +11,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'jquery-rails'
 gem "omniauth-google-oauth2"
 gem 'pg'
+gem 'rest-client'
 
 group :development, :test do
   gem 'binding_of_caller'

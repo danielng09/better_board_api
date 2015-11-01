@@ -11,10 +11,11 @@
   #extract_relevant_data
   #get_job_listing
 =end
-require 'time'
 
 module Aggregator
   class ApiRetriever
+    attr_accessor :results, :passed_params, :api_url
+
     def initialize(passed_params)
       self.passed_params = passed_params
       self.results = []
@@ -36,16 +37,22 @@ module Aggregator
 
     def extract_relevant_data(raw_data)
       raw_data.each do |post|
+        next if old_posting?(post)
+
         formatted_post = {}
         data_format.each do |key, name|
-          if key == :date
-            formatted_post[key] = Time.parse(post[name].strftime("%m/%d/%Y")
+          case key
+          when :date
+            formatted_post[key] = Time.parse(post[name]).strftime("%m/%d/%Y")
+          when :source
+            formatted_post[key] = name
           else
             formatted_post[key] = post[name]
           end
-        })
-        self.results.push(formatted_post)
+        end
+        results.push(formatted_post)
       end
     end
+
   end
 end

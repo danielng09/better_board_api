@@ -1,28 +1,15 @@
-require 'rest-client'
-require 'time'
-
-# doesnt seem to return correct search results yet
-
-class Github
-  attr_accessor :api_url, :results, :passed_params
-
+class Aggregator::Github < Aggregator::ApiRetriever
   def initialize(passed_params)
     self.api_url = 'https://jobs.github.com/positions.json?'
-    self.passed_params = passed_params
-    self.results = []
+    super
   end
 
   def default_params
-    {
-      full_time: true
-    }
+    { full_time: true }
   end
 
-  def merge_passed_params
-    passed_params = {}
-    passed_params[:search] = self.passed_params[:search] if self.passed_params[:search]
-    passed_params[:location] = self.passed_params[:location] if self.passed_params[:location]
-    self.default_params.merge(passed_params)
+  def search_param_keys
+    [[:search, :search], [:location, :location]]
   end
 
   def search
@@ -32,20 +19,18 @@ class Github
     self.results
   end
 
-  def extract_relevant_data(raw_data)
-    raw_data.each do |post|
-      time = Time.parse(post['created_at'])
-      next if ((Time.now - time).to_i / 86_400) > self.passed_params[:activity]
-      self.results.push({
-        jobtitle: post['title'],
-        company: post['company'],
-        location: post['location'],
-        description: post['description'],
-        url: post['url'],
-        date: time.strftime("%m/%d/%Y"),
-        id: post['id'],
-        source: self.class.name
-      })
-    end
+  def old_posting?(post)
+    time = Time.parse(post['created_at'])
+    ((Time.now - time).to_i / 86_400) > passed_params[:activity]
+  end
+
+  def data_format
+    [[:jobtitle, 'title'], [:company, 'company'], [:location, 'location'], [:description, 'description'], [:url, 'url'], [:date, 'created_at'], [:id, 'id'], [:source, 'github']]
   end
 end
+
+# $git = Aggregator::Github.new({
+#       search: 'software',
+#       location: 'san francisco bay area',
+#       activity: 1
+#     })
