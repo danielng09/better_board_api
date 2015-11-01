@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151031230342) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "job_postings", force: :cascade do |t|
     t.string   "title",       null: false
     t.string   "company"
@@ -26,14 +29,14 @@ ActiveRecord::Schema.define(version: 20151031230342) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "job_postings", ["company", "title", "location"], name: "index_job_postings_on_company_and_title_and_location", unique: true
-  add_index "job_postings", ["company"], name: "index_job_postings_on_company"
-  add_index "job_postings", ["date_posted"], name: "index_job_postings_on_date_posted"
-  add_index "job_postings", ["description"], name: "index_job_postings_on_description"
-  add_index "job_postings", ["source"], name: "index_job_postings_on_source"
-  add_index "job_postings", ["source_id"], name: "index_job_postings_on_source_id", unique: true
-  add_index "job_postings", ["title"], name: "index_job_postings_on_title"
-  add_index "job_postings", ["url"], name: "index_job_postings_on_url", unique: true
+  add_index "job_postings", ["company", "title", "location"], name: "index_job_postings_on_company_and_title_and_location", unique: true, using: :btree
+  add_index "job_postings", ["company"], name: "index_job_postings_on_company", using: :btree
+  add_index "job_postings", ["date_posted"], name: "index_job_postings_on_date_posted", using: :btree
+  add_index "job_postings", ["description"], name: "index_job_postings_on_description", using: :btree
+  add_index "job_postings", ["source"], name: "index_job_postings_on_source", using: :btree
+  add_index "job_postings", ["source_id"], name: "index_job_postings_on_source_id", unique: true, using: :btree
+  add_index "job_postings", ["title"], name: "index_job_postings_on_title", using: :btree
+  add_index "job_postings", ["url"], name: "index_job_postings_on_url", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
