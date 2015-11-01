@@ -6,6 +6,7 @@
 #  provider         :string
 #  uid              :string
 #  name             :string
+#  email            :string
 #  oauth_token      :string
 #  oauth_expires_at :datetime
 #  created_at       :datetime         not null

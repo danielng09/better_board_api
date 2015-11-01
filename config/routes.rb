@@ -7,5 +7,5 @@ Rails.application.routes.draw do
     resources :job_postings, only: [:show, :index]
   end
 
-  root "static_pages#root"
+  root "home#show"
 end
