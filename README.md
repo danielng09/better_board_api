@@ -1,5 +1,5 @@
 #Better Boards
-A better job board that aggregates and helps you manage job postings so you can keep on top of your job search
+An application that aggregates job postings from around the web and helps you manage them so you can keep on top of your job search.
 
 ###Description
 Minimum Viable Product:

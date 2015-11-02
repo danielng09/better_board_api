@@ -36,13 +36,13 @@ class Aggregator::Indeed < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:jobtitle, 'jobtitle'],
+    [[:title, 'jobtitle'],
      [:company, 'company'],
      [:location, 'formattedLocation'],
      [:description, 'snippet'],
      [:url, 'url'],
-     [:date, Proc.new { |post| Time.parse(post['date']).strftime("%m/%d/%Y") }],
-     [:id, 'jobkey'],
+     [:date_posted, Proc.new { |post| Time.parse(post['date']).strftime("%m/%d/%Y") }],
+     [:source_id, 'jobkey'],
      [:source, Proc.new { |post| 'indeed' }]]
   end
 end

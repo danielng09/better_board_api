@@ -16,7 +16,6 @@ class CreateJobPostings < ActiveRecord::Migration
     add_index :job_postings, :title
     add_index :job_postings, :company
     add_index :job_postings, [:company, :title, :location], unique: true
-    add_index :job_postings, :description
     add_index :job_postings, :url, unique: true
     add_index :job_postings, :date_posted
     add_index :job_postings, :source

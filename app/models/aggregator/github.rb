@@ -24,13 +24,13 @@ class Aggregator::Github < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:jobtitle, 'title'],
+    [[:title, 'title'],
     [:company, 'company'],
     [:location, 'location'],
     [:description, 'description'],
     [:url, 'url'],
-    [:date, Proc.new { |post| Time.parse(post['created_at']).strftime("%m/%d/%Y") }],
-    [:id, 'id'],
+    [:date_posted, Proc.new { |post| Time.parse(post['created_at']).strftime("%m/%d/%Y") }],
+    [:source_id, 'id'],
     [:source, Proc.new { |post| 'github' }]]
   end
 end

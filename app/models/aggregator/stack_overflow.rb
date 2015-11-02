@@ -28,13 +28,13 @@ class Aggregator::StackOverflow < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:jobtitle, 'title'],
+    [[:title, 'title'],
      [:company, Proc.new { |post| post['author']['name'] }],
      [:location, 'location'],
      [:description, 'description'],
      [:url, 'link'],
-     [:date, Proc.new { |post| Time.parse(post['pubDate']).strftime("%m/%d/%Y") }],
-     [:id, Proc.new { |post| post['link'].match(/http:\/\/careers\.stackoverflow\.com\/jobs\/(\d+)/)[1] }],
+     [:date_posted, Proc.new { |post| Time.parse(post['pubDate']).strftime("%m/%d/%Y") }],
+     [:source_id, Proc.new { |post| post['link'].match(/http:\/\/careers\.stackoverflow\.com\/jobs\/(\d+)/)[1] }],
      [:source, Proc.new { |post| 'stack overflow' }]]
   end
 end

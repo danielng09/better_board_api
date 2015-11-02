@@ -1,13 +1,8 @@
-require 'csv'
+class Aggregator::Loader
+  attr_accessor :results, :passed_params
 
-require './indeed.rb'
-require './stackoverflow.rb'
-require './github.rb'
-
-class SearchJobListing
-  attr_accessor :results
-
-  def initialize
+  def initialize(passed_params)
+    self.passed_params = passed_params
     self.results = []
   end
 
@@ -25,20 +20,11 @@ class SearchJobListing
     self.results = self.results.sort_by { |h| Time.strptime(h[:date], "%m/%d/%Y") }.reverse
   end
 
-  def default_params
-    {
-      search: 'ruby',
-      location: 'san francisco bay area',
-      activity: 1
-    }
-  end
-
-  def query_apis(passed_params={})
-    params = self.default_params.merge(passed_params)
-    indeed = Indeed.new(params).search
-    stackoverflow = StackOverflow.new(params).search
-    github = Github.new(params).search
-    self.results = indeed + stackoverflow
+  def query_apis
+    indeed = Indeed.new(passed_params).search
+    stackoverflow = StackOverflow.new(passed_params).search
+    github = Github.new(passed_params).search
+    self.results = indeed + stackoverflow + github
   end
 
   def filter_results
@@ -53,6 +39,15 @@ class SearchJobListing
     end
   end
 
+  def save_results
+    results.each do |result|
+      next if JobPosting.find_by({title: result[:title], company: result[:company]})
+      args = result
+      args[:date_posted] = Time.strptime(args[:date_posted], "%m/%d/%Y")
+      JobPosting.create!(args)
+    end
+  end
+
   def save_data_as_csv
     CSV.open('./data.csv', 'w') do |file|
       file << ['date_posted', 'title', 'company', 'url', 'description', 'location', 'source_id', 'source']
@@ -63,8 +58,9 @@ class SearchJobListing
   end
 end
 
-$search = SearchJobListing.new
-$search.query_apis
-$search.filter_results
-$search.sort_results!
-$search.save_data_as_csv
+params = { search: 'software',
+           location: 'san francisco bay area',
+           activity: 1 }
+$loader = Aggregator::Loader.new(params)
+$loader.query_apis
+$loader.save_results

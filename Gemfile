@@ -13,7 +13,7 @@ gem "omniauth-google-oauth2"
 gem 'pg'
 gem 'rest-client'
 gem 'mechanize'
-
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'binding_of_caller'
