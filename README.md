@@ -3,8 +3,8 @@ A better job board that aggregates and helps you manage job postings so you can 
 
 ###Description
 Minimum Viable Product:
-- [x]OmniAuth using Google
-- []Aggregate job postings using combination of APIs and web scraping
+- [x] OmniAuth using Google
+- [] Aggregate job postings using combination of APIs and web scraping
   - [x] Indeed
   - [x] Github
   - [x] StackOverflow
