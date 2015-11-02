@@ -1,17 +1,3 @@
-=begin
-  @api_url
-  @publisher_id
-  @passed_params
-  @results
-  #initialize
-  #default_params
-  #merge_passed_params
-  #search
-  #sort_results!
-  #extract_relevant_data
-  #get_job_listing
-=end
-
 module Aggregator
   class ApiRetriever
     attr_accessor :results, :passed_params, :api_url
@@ -38,21 +24,22 @@ module Aggregator
     def extract_relevant_data(raw_data)
       raw_data.each do |post|
         next if old_posting?(post)
-
         formatted_post = {}
         data_format.each do |key, name|
-          case key
-          when :date
-            formatted_post[key] = Time.parse(post[name]).strftime("%m/%d/%Y")
-          when :source
-            formatted_post[key] = name
-          else
+          if name.is_a?(String)
             formatted_post[key] = post[name]
+          elsif name.is_a?(Proc)
+            formatted_post[key] = name.call(post)
           end
         end
         results.push(formatted_post)
       end
     end
 
+    def get_postings(params, xml=false)
+      output = RestClient.get(api_url, {params: params})
+      output = Hash.from_xml(output).to_json if xml
+      JSON.parse(output)
+    end
   end
 end

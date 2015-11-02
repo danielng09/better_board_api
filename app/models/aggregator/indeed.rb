@@ -24,11 +24,11 @@ class Aggregator::Indeed < Aggregator::ApiRetriever
     total_results = false
     raw_data = {'end' => 0, 'totalResults' => 1}
     until raw_data['end'] >= raw_data['totalResults']
-      raw_data = get_job_listings(params)
+      raw_data = get_postings(params)
       extract_relevant_data(raw_data['results'])
       params[:start] = raw_data['end'] + 1
     end
-    self.results
+    results
   end
 
   def old_posting?(post)
@@ -36,12 +36,14 @@ class Aggregator::Indeed < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:jobtitle, 'jobtitle'], [:company, 'company'], [:location, 'formattedLocation'], [:description, 'snippet'], [:url, 'url'], [:date, 'date'], [:id, 'jobkey'], [:source, 'indeed']]
-  end
-
-  def get_job_listings(params)
-    output = RestClient.get(self.api_url, {params: params})
-    JSON.parse(output)
+    [[:jobtitle, 'jobtitle'],
+     [:company, 'company'],
+     [:location, 'formattedLocation'],
+     [:description, 'snippet'],
+     [:url, 'url'],
+     [:date, Proc.new { |post| Time.parse(post['date']).strftime("%m/%d/%Y") }],
+     [:id, 'jobkey'],
+     [:source, Proc.new { |post| 'indeed' }]]
   end
 end
 

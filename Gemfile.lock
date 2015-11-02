@@ -192,6 +192,7 @@ DEPENDENCIES
   byebug
   jbuilder (~> 2.0)
   jquery-rails
+  nokogiri
   omniauth-google-oauth2
   pg
   pry-rails

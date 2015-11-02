@@ -13,10 +13,9 @@ class Aggregator::Github < Aggregator::ApiRetriever
   end
 
   def search
-    search_params = merge_passed_params
-    output = RestClient.get(self.api_url, {params: search_params})
-    extract_relevant_data(JSON.parse(output))
-    self.results
+    raw_data = get_postings(merge_passed_params)
+    extract_relevant_data(raw_data)
+    results
   end
 
   def old_posting?(post)
@@ -25,7 +24,14 @@ class Aggregator::Github < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:jobtitle, 'title'], [:company, 'company'], [:location, 'location'], [:description, 'description'], [:url, 'url'], [:date, 'created_at'], [:id, 'id'], [:source, 'github']]
+    [[:jobtitle, 'title'],
+    [:company, 'company'],
+    [:location, 'location'],
+    [:description, 'description'],
+    [:url, 'url'],
+    [:date, Proc.new { |post| Time.parse(post['created_at']).strftime("%m/%d/%Y") }],
+    [:id, 'id'],
+    [:source, Proc.new { |post| 'github' }]]
   end
 end
 
