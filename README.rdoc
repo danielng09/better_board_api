@@ -3,8 +3,14 @@ A better job board that aggregates and helps you manage job postings so you can 
 
 ###Description
 Minimum Viable Product:
-- []OmniAuth using Google
-- []Aggregate job postings using combination of APIs and web scraping - support Indeed, Github, StackOverflow, VentureLoop, Craigslist, and StartupHire
+- [x]OmniAuth using Google
+- []Aggregate job postings using combination of APIs and web scraping
+  - [x] Indeed
+  - [x] Github
+  - [x] StackOverflow
+  - [] VentureLoop
+  - [] Craigslist
+  - [] StartupHire
 - []Search for postings given params like string, location, and post date
 
 Extra Features:

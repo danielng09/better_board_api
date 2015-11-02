@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem "omniauth-google-oauth2"
 gem 'pg'
 gem 'rest-client'
-gem 'nokogiri'
+gem 'mechanize'
 
 
 group :development, :test do

@@ -12,6 +12,7 @@ class Craigslist
     self.results = []
     self.default_params = params
   end
+
   def search
     self.scraper.get(self.ADDRESS) do |search_page|
       search_form = search_page.form_with(:id => 'searchform') do |search|
