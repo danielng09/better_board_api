@@ -1,5 +1,13 @@
 class Aggregator::Loader
   attr_accessor :results, :passed_params
+  def self.load_postings
+    params = { search: 'software',
+               location: 'san francisco bay area',
+               activity: 1 }
+    loader = Aggregator::Loader.new(params)
+    loader.query_apis
+    loader.save_results
+  end
 
   def initialize(passed_params)
     self.passed_params = passed_params
@@ -58,9 +66,9 @@ class Aggregator::Loader
   end
 end
 
-params = { search: 'software',
-           location: 'san francisco bay area',
-           activity: 1 }
-$loader = Aggregator::Loader.new(params)
-$loader.query_apis
-$loader.save_results
+# params = { search: 'software',
+#            location: 'san francisco bay area',
+#            activity: 1 }
+# $loader = Aggregator::Loader.new(params)
+# $loader.query_apis
+# $loader.save_results

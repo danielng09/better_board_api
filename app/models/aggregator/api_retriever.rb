@@ -15,12 +15,6 @@ module Aggregator
       default_params.merge(hash)
     end
 
-    def sort_results!
-      results = results.sort_by do |post|
-        Time.strptime(post[:date], "%m/%d/%Y")
-      end.reverse
-    end
-
     def extract_relevant_data(raw_data)
       raw_data.each do |post|
         next if old_posting?(post)
