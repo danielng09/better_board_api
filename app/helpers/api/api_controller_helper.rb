@@ -1,0 +1,2 @@
+module API::APIControllerHelper
+end

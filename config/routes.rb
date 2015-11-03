@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     resources :job_postings, only: [:show, :index]
   end
 
-  root "home#show"
+  get 'login', to: 'static_pages'
+  root "static_pages#home"
 end
