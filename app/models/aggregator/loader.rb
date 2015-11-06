@@ -49,7 +49,7 @@ class Aggregator::Loader
 
   def save_results
     results.each do |result|
-      next if JobPosting.find_by({title: result[:title], company: result[:company]})
+      next if JobPosting.find_by({ url: result[:url] }) || JobPosting.find_by({title: result[:title], company: result[:company], location: result[:location]})
       args = result
       args[:date_posted] = Time.strptime(args[:date_posted], "%m/%d/%Y")
       JobPosting.create!(args)
@@ -66,9 +66,10 @@ class Aggregator::Loader
   end
 end
 
-# params = { search: 'software',
-#            location: 'san francisco bay area',
-#            activity: 1 }
-# $loader = Aggregator::Loader.new(params)
-# $loader.query_apis
-# $loader.save_results
+params = { search: 'software',
+           location: 'san francisco bay area',
+           activity: 1 }
+
+$loader = Aggregator::Loader.new(params)
+$loader.query_apis
+$loader.save_results

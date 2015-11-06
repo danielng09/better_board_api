@@ -28,7 +28,7 @@ class Aggregator::StackOverflow < Aggregator::ApiRetriever
   end
 
   def data_format
-    [[:title, 'title'],
+    [[:title, Proc.new { |post| post['title'].match(/(.*)\(/s)[1].strip }],
      [:company, Proc.new { |post| post['author']['name'] }],
      [:location, 'location'],
      [:description, 'description'],
