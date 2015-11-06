@@ -1,22 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'bootstrap-sass', '~> 3.2.0'
-gem 'autoprefixer-rails'
 gem 'rails', '4.2.3'
-gem 'sass-rails', '~> 5.0'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
-gem "omniauth-google-oauth2"
+gem 'rails-api', '>= 0.4.0'
+gem 'active_model_serializers', '~> 0.8.3'
 gem 'pg'
+gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rest-client'
 gem 'mechanize'
 gem 'whenever', :require => false
-gem 'react-rails', '~> 1.3.0'
-gem 'flux-rails-assets'
 gem 'rack-cors'
 
 group :development, :test do
