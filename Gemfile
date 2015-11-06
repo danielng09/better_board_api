@@ -15,6 +15,9 @@ gem 'pg'
 gem 'rest-client'
 gem 'mechanize'
 gem 'whenever', :require => false
+gem 'react-rails', '~> 1.3.0'
+gem 'flux-rails-assets'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'binding_of_caller'
