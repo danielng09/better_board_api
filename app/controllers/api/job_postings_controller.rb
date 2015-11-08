@@ -2,7 +2,7 @@ class API::JobPostingsController < ApplicationController
 
   # get all the job postings
   def index
-    @job_postings = JobPosting.all
+    @job_postings = JobPosting.order(date_posted: :desc)
     render json: @job_postings, each_serializer: JobPostingsSerializer, root: false
   end
 

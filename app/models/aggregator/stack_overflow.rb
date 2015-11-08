@@ -35,7 +35,7 @@ class Aggregator::StackOverflow < Aggregator::ApiRetriever
      [:url, 'link'],
      [:date_posted, Proc.new { |post| Time.parse(post['pubDate']).strftime("%m/%d/%Y") }],
      [:source_id, Proc.new { |post| post['link'].match(/http:\/\/careers\.stackoverflow\.com\/jobs\/(\d+)/)[1] }],
-     [:source, Proc.new { |post| 'stack overflow' }]]
+     [:source, Proc.new { |post| 'stackoverflow' }]]
   end
 end
 

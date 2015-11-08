@@ -51,6 +51,7 @@ class Aggregator::Loader
     results.each do |result|
       next if JobPosting.find_by({ url: result[:url] }) || JobPosting.find_by({title: result[:title], company: result[:company], location: result[:location]})
       args = result
+      args[:description] = args[:description].gsub(/<br \/>/, '')
       args[:date_posted] = Time.strptime(args[:date_posted], "%m/%d/%Y")
       JobPosting.create!(args)
     end
