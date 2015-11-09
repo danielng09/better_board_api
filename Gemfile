@@ -9,6 +9,7 @@ gem 'rest-client'
 gem 'mechanize'
 gem 'whenever', :require => false
 gem 'rack-cors'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'binding_of_caller'
