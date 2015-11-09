@@ -16,5 +16,5 @@
 #
 
 class JobPosting < ActiveRecord::Base
-  self.per_page = 5
+  self.per_page = 25
 end
