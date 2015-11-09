@@ -10,6 +10,7 @@ gem 'mechanize'
 gem 'whenever', :require => false
 gem 'rack-cors'
 gem 'will_paginate'
+gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem 'binding_of_caller'

@@ -10,4 +10,5 @@ class JobPostingsSerializer < ActiveModel::Serializer
   def time_ago
     time_ago_in_words(object.date_posted)
   end
+
 end

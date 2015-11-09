@@ -3,7 +3,9 @@ class API::JobPostingsController < ApplicationController
   # get all the job postings
   def index
     @job_postings = JobPosting.paginate(page: params[:page]).order(date_posted: :desc)
-    render json: @job_postings, each_serializer: JobPostingsSerializer, root: false
+    render json: @job_postings,
+           each_serializer: JobPostingsSerializer,
+          meta: { total_pages: JobPosting.total_pages }
   end
 
   def show

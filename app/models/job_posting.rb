@@ -16,5 +16,9 @@
 #
 
 class JobPosting < ActiveRecord::Base
-  self.per_page = 25
+  self.per_page = 15
+
+  def self.total_pages
+    self.count / self.per_page
+  end
 end
