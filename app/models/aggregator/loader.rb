@@ -24,14 +24,13 @@ class Aggregator::Loader
     !title.downcase.scan(Regexp.union(include)).empty?
   end
 
-  def sort_results!
-    self.results = self.results.sort_by { |h| Time.strptime(h[:date], "%m/%d/%Y") }.reverse
-  end
-
   def query_apis
     indeed = Indeed.new(passed_params).search
+    p 'indeed loaded'
     stackoverflow = StackOverflow.new(passed_params).search
+    p 'stackoverflow loaded'
     github = Github.new(passed_params).search
+    p 'github loaded'
     self.results = indeed + stackoverflow + github
   end
 
@@ -52,7 +51,6 @@ class Aggregator::Loader
       next if JobPosting.find_by({ url: result[:url] }) || JobPosting.find_by({title: result[:title], company: result[:company], location: result[:location]})
       args = result
       args[:description] = args[:description].gsub(/<br \/>/, '')
-      args[:date_posted] = Time.strptime(args[:date_posted], "%m/%d/%Y")
       JobPosting.create!(args)
     end
   end

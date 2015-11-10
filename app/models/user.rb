@@ -14,13 +14,13 @@
 #
 
 class User < ActiveRecord::Base
-  def self.from_omniauth(auth)
-    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.name = auth.info.name
-      user.oauth_token = auth.credentials.token
-      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+  def self.find_or_create(user_info)
+    where(user_info).first_or_initialize.tap do |user|
+      user.pid = user_info['pid']
+      user.name = user_info['name']
+      user.imageUrl = user_info['imageUrl']
+      user.email = user_info['email']
+      user.last_login = Time.now()
       user.save!
     end
   end

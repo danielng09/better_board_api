@@ -193,7 +193,7 @@ DEPENDENCIES
   pry-rails
   rack-cors
   rails (= 4.2.3)
-  rails-api (>= 0.4.0)
+  rails-api
   rest-client
   sdoc (~> 0.4.0)
   spring

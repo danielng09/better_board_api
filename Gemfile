@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.3'
-gem 'rails-api', '>= 0.4.0'
+gem 'rails-api', require: 'rails-api/action_controller/api'
 gem 'active_model_serializers', '~> 0.8.3'
 gem 'pg'
 gem 'sdoc', '~> 0.4.0', group: :doc

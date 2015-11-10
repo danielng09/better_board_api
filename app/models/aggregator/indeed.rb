@@ -41,14 +41,17 @@ class Aggregator::Indeed < Aggregator::ApiRetriever
      [:location, 'formattedLocation'],
      [:description, 'snippet'],
      [:url, 'url'],
-     [:date_posted, Proc.new { |post| Time.parse(post['date']).strftime("%m/%d/%Y") }],
+     [:date_posted, Proc.new { |post| Time.parse(post['date'])
+                                          .in_time_zone("Pacific Time (US & Canada)") }],
      [:source_id, 'jobkey'],
      [:source, Proc.new { |post| 'indeed' }]]
   end
 end
 
-# $in = Aggregator::Indeed.new({
-#       search: 'ruby',
-#       location: 'san francisco bay area',
-#       activity: 1
-#     })
+$in = Aggregator::Indeed.new({
+      search: 'ruby',
+      location: 'san francisco bay area',
+      activity: 1
+    })
+
+$in.search

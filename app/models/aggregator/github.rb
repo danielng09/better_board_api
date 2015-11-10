@@ -19,7 +19,7 @@ class Aggregator::Github < Aggregator::ApiRetriever
   end
 
   def old_posting?(post)
-    time = Time.parse(post['created_at'])
+    time = Time.parse(post['created_at']).in_time_zone("Pacific Time (US & Canada)")
     ((Time.now - time).to_i / 86_400) > passed_params[:activity]
   end
 
@@ -29,7 +29,8 @@ class Aggregator::Github < Aggregator::ApiRetriever
     [:location, 'location'],
     [:description, 'description'],
     [:url, 'url'],
-    [:date_posted, Proc.new { |post| Time.parse(post['created_at']).strftime("%m/%d/%Y") }],
+    [:date_posted, Proc.new { |post| Time.parse(post['created_at'])
+                                         .in_time_zone("Pacific Time (US & Canada)") }],
     [:source_id, 'id'],
     [:source, Proc.new { |post| 'github' }]]
   end
