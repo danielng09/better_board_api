@@ -1,20 +1,4 @@
-#Better Boards
-An application that aggregates job postings from around the web and helps you manage them so you can keep on top of your job search.
+#Better Board
+This is the backend of the Better Board web application serving JSON API endpoints using Ruby on Rails.
 
-###Description
-Minimum Viable Product:
-- [x] OmniAuth using Google
-- [ ] Aggregate job postings using combination of APIs and web scraping
-  - [x] Indeed
-  - [x] Github
-  - [x] StackOverflow
-  - [ ] VentureLoop
-  - [ ] Craigslist
-  - [ ] StartupHire
-- [ ] Search for postings given params like string, location, and post date
-
-Extra Features:
-- [ ] Tag and save job postings
-- [ ] Saved job searches
-- [ ] Automated morning emails
-- [ ] Time Series Graph to show progress
+Checkout the [frontend side](https://github.com/danielng09/better_board_app) of Better Board for more info
