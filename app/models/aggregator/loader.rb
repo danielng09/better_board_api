@@ -64,11 +64,3 @@ class Aggregator::Loader
     end
   end
 end
-
-params = { search: 'software',
-           location: 'san francisco bay area',
-           activity: 1 }
-
-$loader = Aggregator::Loader.new(params)
-$loader.query_apis
-$loader.save_results
