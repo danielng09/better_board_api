@@ -31,7 +31,9 @@ class Aggregator::Loader
     p 'stackoverflow loaded'
     github = Aggregator::Github.new(passed_params).search
     p 'github loaded'
-    self.results = indeed + stackoverflow + github
+    craigslist = Aggregator::Craigslist.new(passed_params).search
+    p 'craigslist loaded'
+    self.results = indeed + stackoverflow + github + craigslist
   end
 
   def filter_results
