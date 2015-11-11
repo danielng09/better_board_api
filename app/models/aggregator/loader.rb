@@ -25,11 +25,11 @@ class Aggregator::Loader
   end
 
   def query_apis
-    indeed = Indeed.new(passed_params).search
+    indeed = Aggregator::Indeed.new(passed_params).search
     p 'indeed loaded'
-    stackoverflow = StackOverflow.new(passed_params).search
+    stackoverflow = Aggregator::StackOverflow.new(passed_params).search
     p 'stackoverflow loaded'
-    github = Github.new(passed_params).search
+    github = Aggregator::Github.new(passed_params).search
     p 'github loaded'
     self.results = indeed + stackoverflow + github
   end
