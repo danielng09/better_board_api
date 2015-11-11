@@ -37,6 +37,3 @@ module Aggregator
     end
   end
 end
-#
-# rss = RSS::Parser.parse(url , false)
-# JSON.parse(rss.items.to_json)

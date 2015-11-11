@@ -35,9 +35,3 @@ class Aggregator::Github < Aggregator::ApiRetriever
     [:source, Proc.new { |post| 'github' }]]
   end
 end
-
-# $git = Aggregator::Github.new({
-#       search: 'software',
-#       location: 'san francisco bay area',
-#       activity: 1
-#     })

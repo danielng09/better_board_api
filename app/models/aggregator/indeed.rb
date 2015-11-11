@@ -47,11 +47,3 @@ class Aggregator::Indeed < Aggregator::ApiRetriever
      [:source, Proc.new { |post| 'indeed' }]]
   end
 end
-
-$in = Aggregator::Indeed.new({
-      search: 'ruby',
-      location: 'san francisco bay area',
-      activity: 1
-    })
-
-$in.search

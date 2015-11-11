@@ -20,13 +20,5 @@ class Aggregator::VentureLoop < Aggregator::WebScraper
   end
 end
 
-
-mech = Mechanize.new
-mech.history_added = Proc.new { sleep 0.5 }
-
-params = { search: 'software',
-           location: 'san francisco bay area',
-           activity: 1 }
-
-$cl = Craigslist.new(mech, params)
-$cl.search
+# mech = Mechanize.new
+# mech.history_added = Proc.new { sleep 0.5 }

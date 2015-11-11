@@ -37,9 +37,3 @@ class Aggregator::StackOverflow < Aggregator::ApiRetriever
      [:source, Proc.new { |post| 'stackoverflow' }]]
   end
 end
-
-# $so = Aggregator::StackOverflow.new({
-#       search: 'ruby',
-#       location: 'san francisco bay area',
-#       activity: 1
-#     })

@@ -11,3 +11,8 @@ development:
 test:
   <<: *default
   database: better_boards_test
+
+production:
+  adapater: postgresql
+  encoding: unicode
+  database: better_board_production
