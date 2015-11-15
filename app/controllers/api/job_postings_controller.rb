@@ -5,7 +5,7 @@ class API::JobPostingsController < ApplicationController
     @job_postings = JobPosting.paginate(page: params[:page]).order(date_posted: :desc)
     render json: @job_postings,
            each_serializer: JobPostingsSerializer,
-          meta: { total_pages: JobPosting.total_pages }
+           meta: { total_pages: JobPosting.total_pages }
   end
 
   def show
