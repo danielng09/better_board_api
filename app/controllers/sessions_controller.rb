@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    user_params = User.validate_id_token(params[:token_id])
+    user_params = User.validate_id_token(params[:id_token])
     user = User.find_or_create(user_params)
     render json: user
   end
