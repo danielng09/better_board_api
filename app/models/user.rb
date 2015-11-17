@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   GOOGLE_ENDPOINT = "https://www.googleapis.com/oauth2/v3/tokeninfo"
 
   def self.validate_id_token(id_token)
-    output = JSON.parse(RestClient.get(GOOGLE_ENDPOINT, {params: {id_token: id_token}}))
+    output = JSON.parse(RestClient.get(GOOGLE_ENDPOINT, { params: { id_token: id_token } }))
     if output['error_description']
       nil
     else

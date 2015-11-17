@@ -2,7 +2,7 @@ class API::JobPostingsController < ApplicationController
 
   # get all the job postings
   def index
-    @job_postings = JobPosting.paginate(page: params[:page]).order(date_posted: :desc)
+    @job_postings = JobPosting.paginate(page: job_posting_params[:page]).order(date_posted: :desc)
     render json: @job_postings,
            each_serializer: JobPostingsSerializer,
            meta: { total_pages: JobPosting.total_pages }
@@ -11,5 +11,10 @@ class API::JobPostingsController < ApplicationController
   def show
     @job_posting = JobPosting.find(params[:id])
     render json: @job_posting, serializer: JobPostingSerializer, root: false
+  end
+
+  private
+  def job_posting_params
+    params.require(:search).permit(:page, :title, :company, :source, :location, :date_posted, :anything)
   end
 end
