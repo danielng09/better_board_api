@@ -13,9 +13,29 @@
 #  source_id   :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#
 
 class JobPosting < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: 'false' do
+      indexes :date_posted, type: 'float'
+    end
+  end
+
+  def self.search(query)
+    match_key = query.empty? ? :match_all : :match
+    __elasticsearch__.search({
+      query: {
+        "#{match_key}": query
+      },
+      sort: {
+        date_posted: { order: :desc }
+      }
+    })
+  end
+
   self.per_page = 20
 
   def self.total_pages

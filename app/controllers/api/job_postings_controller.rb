@@ -2,10 +2,18 @@ class API::JobPostingsController < ApplicationController
 
   # get all the job postings
   def index
-    @job_postings = JobPosting.paginate(page: job_posting_params[:page]).order(date_posted: :desc)
+    qs = job_posting_params[:q].nil? ? {} : { _all: job_posting_params[:q] }
+    response = JobPosting.search(qs)
+    @job_postings = response.page(job_posting_params[:page]).as_json
+    postings_total = response.response.hits.total
+    max_postings_shown = JobPosting.per_page * job_posting_params[:page].to_i
+    postings_shown = max_postings_shown > postings_total ? postings_total : max_postings_shown
+
     render json: @job_postings,
            each_serializer: JobPostingsSerializer,
-           meta: { total_pages: JobPosting.total_pages }
+           meta: { postings_total: postings_total,
+                   postings_shown: postings_shown,
+                   page: job_posting_params[:page] }
   end
 
   def show
@@ -15,6 +23,6 @@ class API::JobPostingsController < ApplicationController
 
   private
   def job_posting_params
-    params.require(:search).permit(:page, :title, :company, :source, :location, :date_posted, :anything)
+    params.require(:search).permit(:page, :title, :company, :source, :location, :date_posted, :anything, :q)
   end
 end
