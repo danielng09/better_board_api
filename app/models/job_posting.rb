@@ -32,7 +32,8 @@ class JobPosting < ActiveRecord::Base
       },
       sort: {
         date_posted: { order: :desc }
-      }
+      },
+      size: self.per_page
     })
   end
 

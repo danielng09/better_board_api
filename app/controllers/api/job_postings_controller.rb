@@ -2,7 +2,7 @@ class API::JobPostingsController < ApplicationController
 
   # get all the job postings
   def index
-    qs = job_posting_params[:q].nil? ? {} : { _all: job_posting_params[:q] }
+    qs = job_posting_params[:q].empty? ? {} : { _all: job_posting_params[:q] }
     response = JobPosting.search(qs)
     @job_postings = response.page(job_posting_params[:page]).as_json
     postings_total = response.response.hits.total
@@ -23,6 +23,6 @@ class API::JobPostingsController < ApplicationController
 
   private
   def job_posting_params
-    params.require(:search).permit(:page, :title, :company, :source, :location, :date_posted, :anything, :q)
+    params.require(:search).permit(:page, :q)
   end
 end
