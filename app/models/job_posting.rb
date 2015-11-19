@@ -44,3 +44,5 @@ class JobPosting < ActiveRecord::Base
     self.count / self.per_page
   end
 end
+
+JobPosting.import
