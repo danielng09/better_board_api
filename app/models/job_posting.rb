@@ -13,6 +13,7 @@
 #  source_id   :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+require 'elasticsearch/model'
 
 class JobPosting < ActiveRecord::Base
   include Elasticsearch::Model
