@@ -27,7 +27,7 @@ class JobPosting < ActiveRecord::Base
 
   def self.search(query)
     match_key = query.empty? ? :match_all : :match
-    __elasticsearch__.search({
+    self.__elasticsearch__.search({
       query: {
         match_key => query
       },
