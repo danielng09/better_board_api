@@ -28,7 +28,7 @@ class JobPosting < ActiveRecord::Base
     match_key = query.empty? ? :match_all : :match
     __elasticsearch__.search({
       query: {
-        "#{match_key}": query
+        match_key => query
       },
       sort: {
         date_posted: { order: :desc }
