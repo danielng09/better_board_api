@@ -19,11 +19,11 @@ class JobPosting < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  settings index: { number_of_shards: 1 } do
-    mappings dynamic: 'false' do
-      indexes :date_posted, type: 'float'
-    end
-  end
+  # settings index: { number_of_shards: 1 } do
+  #   mappings dynamic: 'false' do
+  #     indexes :date_posted, type: 'float'
+  #   end
+  # end
 
   def self.search(query)
     match_key = query.empty? ? :match_all : :match
